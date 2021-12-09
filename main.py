@@ -62,6 +62,15 @@ class Cube:
                     self._d()
             _ += 1
 
+    def repeat(self, seq):
+        sides = copy.deepcopy(self.sides)
+        tim = 1
+        self.read(seq)
+        while not np.array_equal(sides, self.sides):
+            self.read(seq)
+            tim += 1
+        print(tim)
+
     def r(self):
         sides = copy.deepcopy(self.sides)
 
@@ -205,6 +214,6 @@ class Cube:
 
 cb = Cube()
 
-cb.read("'r'u'u'u")
+cb.read("")
 
 cb.draw()
