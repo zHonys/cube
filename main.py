@@ -12,9 +12,6 @@ colors = [
 ]
 
 
-# sides = [np.full((3, 3), x) for x in range(7)]
-
-
 class Cube:
     def __init__(self):
         self.sides = [np.full((3, 3), x) for x in range(6)]
@@ -28,7 +25,6 @@ class Cube:
             colored.append([])
             for __ in sides[_]:
                 colored[_].append(f"{colors[__]}  {colors[-1]}")
-                #  colored[_].append(f" ")
 
         colored = np.array(colored).reshape((6, 3, 3))
 
@@ -50,6 +46,10 @@ class Cube:
                 self.l()
             elif seq[_] == "d":
                 self.d()
+            elif seq[_] == "f":
+                self.f()
+            elif seq[_] == "b":
+                self.b()
             elif seq[_] == "'":
                 _ += 1
                 if seq[_] == "r":
@@ -60,6 +60,10 @@ class Cube:
                     self._l()
                 elif seq[_] == "d":
                     self._d()
+                elif seq[_] == "f":
+                    self._f()
+                elif seq[_] == "b":
+                    self._b()
             _ += 1
 
     def repeat(self, seq):
@@ -188,10 +192,62 @@ class Cube:
         self.sides = copy.deepcopy(sides)
 
     def f(self):
-        pass
+        sides = copy.deepcopy(self.sides)
+
+        for _ in range(0, 3):
+            sides[0][2][_] = self.sides[1][_][2]
+        for _ in range(0, 3):
+            sides[1][_][2] = self.sides[4][0][_]
+        for _ in range(0, 3):
+            sides[4][0][_] = self.sides[3][_][0]
+        for _ in range(0, 3):
+            sides[3][_][0] = self.sides[0][2][_]
+
+        sides[2] = sides[2].reshape([9])
+        self.sides[2] = self.sides[2].reshape([9])
+
+        for _ in range(0, 3):
+            sides[2][_ * 2 + 2 + _] = self.sides[2][_]
+        for _ in range(0, 3):
+            sides[2][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[2][2 * (_ + 1) + _]
+        for _ in range(0, 3):
+            sides[2][((_ * 2 + 2) * -1) + 8 - _] = self.sides[2][8 - _]
+        for _ in range(0, 3):
+            sides[2][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[2][6 - (_ * 3)]
+
+        sides[2] = sides[2].reshape([3, 3])
+        self.sides[2] = self.sides[2].reshape([3, 3])
+
+        self.sides = copy.deepcopy(sides)
 
     def b(self):
-        pass
+        sides = copy.deepcopy(self.sides)
+
+        for _ in range(0, 3):
+            sides[0][0][_] = self.sides[3][_][2]
+        for _ in range(0, 3):
+            sides[3][_][2] = self.sides[4][2][2 - _]
+        for _ in range(0, 3):
+            sides[4][2][_] = self.sides[1][_][0]
+        for _ in range(0, 3):
+            sides[1][_][0] = self.sides[0][0][2 - _]
+
+        sides[5] = sides[5].reshape([9])
+        self.sides[5] = self.sides[5].reshape([9])
+
+        for _ in range(0, 3):
+            sides[5][_ * 2 + 2 + _] = self.sides[5][_]
+        for _ in range(0, 3):
+            sides[5][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[5][2 * (_ + 1) + _]
+        for _ in range(0, 3):
+            sides[5][((_ * 2 + 2) * -1) + 8 - _] = self.sides[5][8 - _]
+        for _ in range(0, 3):
+            sides[5][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[5][6 - (_ * 3)]
+
+        sides[5] = sides[5].reshape([3, 3])
+        self.sides[5] = self.sides[5].reshape([3, 3])
+
+        self.sides = copy.deepcopy(sides)
 
     def _r(self):
         sides = copy.deepcopy(self.sides)
@@ -310,14 +366,66 @@ class Cube:
         self.sides = copy.deepcopy(sides)
 
     def _f(self):
-        pass
+        sides = copy.deepcopy(self.sides)
+
+        for _ in range(0, 3):
+            sides[0][2][_] = self.sides[3][_][0]
+        for _ in range(0, 3):
+            sides[3][_][0] = self.sides[4][0][2 - _]
+        for _ in range(0, 3):
+            sides[4][0][_] = self.sides[1][_][2]
+        for _ in range(0, 3):
+            sides[1][_][2] = self.sides[0][2][2 - _]
+
+        sides[2] = sides[2].reshape([9])
+        self.sides[2] = self.sides[2].reshape([9])
+
+        for _ in range(0, 3):
+            sides[2][6 - (_ * 3)] = self.sides[2][_]
+        for _ in range(0, 3):
+            sides[2][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[2][6 - (_ * 3)]
+        for _ in range(0, 3):
+            sides[2][(-6 + (_ * 4)) + 8 - _] = self.sides[2][8 - _]
+        for _ in range(0, 3):
+            sides[2][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[2][2 * (_ + 1) + _]
+
+        sides[0] = sides[0].reshape([3, 3])
+        self.sides[0] = self.sides[0].reshape([3, 3])
+
+        self.sides = copy.deepcopy(sides)
 
     def _b(self):
-        pass
+        sides = copy.deepcopy(self.sides)
+
+        for _ in range(0, 3):
+            sides[0][0][_] = self.sides[1][2 - _][0]
+        for _ in range(0, 3):
+            sides[1][_][0] = self.sides[4][2][_]
+        for _ in range(0, 3):
+            sides[4][2][_] = self.sides[3][2 - _][2]
+        for _ in range(0, 3):
+            sides[3][_][2] = self.sides[0][0][_]
+
+        sides[5] = sides[5].reshape([9])
+        self.sides[5] = self.sides[5].reshape([9])
+
+        for _ in range(0, 3):
+            sides[5][6 - (_ * 3)] = self.sides[5][_]
+        for _ in range(0, 3):
+            sides[5][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[5][6 - (_ * 3)]
+        for _ in range(0, 3):
+            sides[5][(-6 + (_ * 4)) + 8 - _] = self.sides[5][8 - _]
+        for _ in range(0, 3):
+            sides[5][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[5][2 * (_ + 1) + _]
+
+        sides[5] = sides[5].reshape([3, 3])
+        self.sides[5] = self.sides[5].reshape([3, 3])
+
+        self.sides = copy.deepcopy(sides)
 
 
 cb = Cube()
 
-cb.repeat("ruld")
+cb.read("db")
 
 cb.draw()
