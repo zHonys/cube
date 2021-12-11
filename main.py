@@ -87,22 +87,9 @@ class Cube:
         for _ in range(0, 3):
             sides[5][_][2] = self.sides[0][_][2]
 
-        sides[3] = sides[3].reshape([9])
-        self.sides[3] = self.sides[3].reshape([9])
-
-        for _ in range(0, 3):
-            sides[3][_ * 2 + 2 + _] = self.sides[3][_]
-        for _ in range(0, 3):
-            sides[3][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[3][2 * (_ + 1) + _]
-        for _ in range(0, 3):
-            sides[3][((_ * 2 + 2) * -1) + 8 - _] = self.sides[3][8 - _]
-        for _ in range(0, 3):
-            sides[3][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[3][6 - (_ * 3)]
-
-        sides[3] = sides[3].reshape([3, 3])
-        self.sides[3] = self.sides[3].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateClock(sides, 3)
 
     def u(self):
         sides = copy.deepcopy(self.sides)
@@ -116,22 +103,9 @@ class Cube:
         for _ in range(0, 3):
             sides[5][2][2 - _] = self.sides[1][0][_]
 
-        sides[0] = sides[0].reshape([9])
-        self.sides[0] = self.sides[0].reshape([9])
-
-        for _ in range(0, 3):
-            sides[0][_ * 2 + 2 + _] = self.sides[0][_]
-        for _ in range(0, 3):
-            sides[0][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[0][2 * (_ + 1) + _]
-        for _ in range(0, 3):
-            sides[0][((_ * 2 + 2) * -1) + 8 - _] = self.sides[0][8 - _]
-        for _ in range(0, 3):
-            sides[0][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[0][6 - (_ * 3)]
-
-        sides[0] = sides[0].reshape([3, 3])
-        self.sides[0] = self.sides[0].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateClock(sides, 0)
 
     def l(self):
         sides = copy.deepcopy(self.sides)
@@ -145,22 +119,9 @@ class Cube:
         for _ in range(0, 3):
             sides[2][_][0] = self.sides[0][_][0]
 
-        sides[1] = sides[1].reshape([9])
-        self.sides[1] = self.sides[1].reshape([9])
-
-        for _ in range(0, 3):
-            sides[1][_ * 2 + 2 + _] = self.sides[1][_]
-        for _ in range(0, 3):
-            sides[1][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[1][2 * (_ + 1) + _]
-        for _ in range(0, 3):
-            sides[1][((_ * 2 + 2) * -1) + 8 - _] = self.sides[1][8 - _]
-        for _ in range(0, 3):
-            sides[1][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[1][6 - (_ * 3)]
-
-        sides[1] = sides[1].reshape([3, 3])
-        self.sides[1] = self.sides[1].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateClock(sides, 1)
 
     def d(self):
         sides = copy.deepcopy(self.sides)
@@ -174,20 +135,9 @@ class Cube:
         for _ in range(0, 3):
             sides[2][2][_] = self.sides[1][2][_]
 
-        sides[4] = sides[4].reshape([9])
-        self.sides[4] = self.sides[4].reshape([9])
+        self.sides = copy.deepcopy(sides)
 
-        for _ in range(0, 3):
-            sides[4][_ * 2 + 2 + _] = self.sides[4][_]
-        for _ in range(0, 3):
-            sides[4][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[4][2 * (_ + 1) + _]
-        for _ in range(0, 3):
-            sides[4][((_ * 2 + 2) * -1) + 8 - _] = self.sides[4][8 - _]
-        for _ in range(0, 3):
-            sides[4][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[4][6 - (_ * 3)]
-
-        sides[4] = sides[4].reshape([3, 3])
-        self.sides[4] = self.sides[4].reshape([3, 3])
+        self.rotateClock(sides, 4)
 
         self.sides = copy.deepcopy(sides)
 
@@ -203,22 +153,9 @@ class Cube:
         for _ in range(0, 3):
             sides[3][_][0] = self.sides[0][2][_]
 
-        sides[2] = sides[2].reshape([9])
-        self.sides[2] = self.sides[2].reshape([9])
-
-        for _ in range(0, 3):
-            sides[2][_ * 2 + 2 + _] = self.sides[2][_]
-        for _ in range(0, 3):
-            sides[2][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[2][2 * (_ + 1) + _]
-        for _ in range(0, 3):
-            sides[2][((_ * 2 + 2) * -1) + 8 - _] = self.sides[2][8 - _]
-        for _ in range(0, 3):
-            sides[2][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[2][6 - (_ * 3)]
-
-        sides[2] = sides[2].reshape([3, 3])
-        self.sides[2] = self.sides[2].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateClock(sides, 2)
 
     def b(self):
         sides = copy.deepcopy(self.sides)
@@ -232,22 +169,9 @@ class Cube:
         for _ in range(0, 3):
             sides[1][_][0] = self.sides[0][0][2 - _]
 
-        sides[5] = sides[5].reshape([9])
-        self.sides[5] = self.sides[5].reshape([9])
-
-        for _ in range(0, 3):
-            sides[5][_ * 2 + 2 + _] = self.sides[5][_]
-        for _ in range(0, 3):
-            sides[5][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[5][2 * (_ + 1) + _]
-        for _ in range(0, 3):
-            sides[5][((_ * 2 + 2) * -1) + 8 - _] = self.sides[5][8 - _]
-        for _ in range(0, 3):
-            sides[5][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[5][6 - (_ * 3)]
-
-        sides[5] = sides[5].reshape([3, 3])
-        self.sides[5] = self.sides[5].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateClock(sides, 5)
 
     def _r(self):
         sides = copy.deepcopy(self.sides)
@@ -261,22 +185,9 @@ class Cube:
         for _ in range(0, 3):
             sides[2][_][2] = self.sides[0][_][2]
 
-        sides[3] = sides[3].reshape([9])
-        self.sides[3] = self.sides[3].reshape([9])
-
-        for _ in range(0, 3):
-            sides[3][6 - (_ * 3)] = self.sides[3][_]
-        for _ in range(0, 3):
-            sides[3][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[3][6 - (_ * 3)]
-        for _ in range(0, 3):
-            sides[3][(-6 + (_ * 4)) + 8 - _] = self.sides[3][8 - _]
-        for _ in range(0, 3):
-            sides[3][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[3][2 * (_ + 1) + _]
-
-        sides[3] = sides[3].reshape([3, 3])
-        self.sides[3] = self.sides[3].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateAntiClock(sides, 3)
 
     def _u(self):
         sides = copy.deepcopy(self.sides)
@@ -290,22 +201,9 @@ class Cube:
         for _ in range(0, 3):
             sides[2][0][_] = self.sides[1][0][_]
 
-        sides[0] = sides[0].reshape([9])
-        self.sides[0] = self.sides[0].reshape([9])
-
-        for _ in range(0, 3):
-            sides[0][6 - (_ * 3)] = self.sides[0][_]
-        for _ in range(0, 3):
-            sides[0][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[0][6 - (_ * 3)]
-        for _ in range(0, 3):
-            sides[0][(-6 + (_ * 4)) + 8 - _] = self.sides[0][8 - _]
-        for _ in range(0, 3):
-            sides[0][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[0][2 * (_ + 1) + _]
-
-        sides[0] = sides[0].reshape([3, 3])
-        self.sides[0] = self.sides[0].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateAntiClock(sides, 0)
 
     def _l(self):
         sides = copy.deepcopy(self.sides)
@@ -319,22 +217,9 @@ class Cube:
         for _ in range(0, 3):
             sides[5][_][0] = self.sides[0][_][0]
 
-        sides[1] = sides[1].reshape([9])
-        self.sides[1] = self.sides[1].reshape([9])
-
-        for _ in range(0, 3):
-            sides[1][6 - (_ * 3)] = self.sides[1][_]
-        for _ in range(0, 3):
-            sides[1][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[1][6 - (_ * 3)]
-        for _ in range(0, 3):
-            sides[1][(-6 + (_ * 4)) + 8 - _] = self.sides[1][8 - _]
-        for _ in range(0, 3):
-            sides[1][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[1][2 * (_ + 1) + _]
-
-        sides[1] = sides[1].reshape([3, 3])
-        self.sides[1] = self.sides[1].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateAntiClock(sides, 1)
 
     def _d(self):
         sides = copy.deepcopy(self.sides)
@@ -348,22 +233,9 @@ class Cube:
         for _ in range(0, 3):
             sides[5][0][2 - _] = self.sides[1][2][_]
 
-        sides[4] = sides[4].reshape([9])
-        self.sides[4] = self.sides[4].reshape([9])
-
-        for _ in range(0, 3):
-            sides[4][6 - (_ * 3)] = self.sides[4][_]
-        for _ in range(0, 3):
-            sides[4][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[4][6 - (_ * 3)]
-        for _ in range(0, 3):
-            sides[4][(-6 + (_ * 4)) + 8 - _] = self.sides[4][8 - _]
-        for _ in range(0, 3):
-            sides[4][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[4][2 * (_ + 1) + _]
-
-        sides[4] = sides[4].reshape([3, 3])
-        self.sides[4] = self.sides[4].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateAntiClock(sides, 4)
 
     def _f(self):
         sides = copy.deepcopy(self.sides)
@@ -377,22 +249,9 @@ class Cube:
         for _ in range(0, 3):
             sides[1][_][2] = self.sides[0][2][2 - _]
 
-        sides[2] = sides[2].reshape([9])
-        self.sides[2] = self.sides[2].reshape([9])
-
-        for _ in range(0, 3):
-            sides[2][6 - (_ * 3)] = self.sides[2][_]
-        for _ in range(0, 3):
-            sides[2][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[2][6 - (_ * 3)]
-        for _ in range(0, 3):
-            sides[2][(-6 + (_ * 4)) + 8 - _] = self.sides[2][8 - _]
-        for _ in range(0, 3):
-            sides[2][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[2][2 * (_ + 1) + _]
-
-        sides[0] = sides[0].reshape([3, 3])
-        self.sides[0] = self.sides[0].reshape([3, 3])
-
         self.sides = copy.deepcopy(sides)
+
+        self.rotateAntiClock(sides, 0)
 
     def _b(self):
         sides = copy.deepcopy(self.sides)
@@ -406,20 +265,43 @@ class Cube:
         for _ in range(0, 3):
             sides[3][_][2] = self.sides[0][0][_]
 
-        sides[5] = sides[5].reshape([9])
-        self.sides[5] = self.sides[5].reshape([9])
+        self.sides = copy.deepcopy(sides)
+
+        self.rotateAntiClock(sides, 5)
+
+    def rotateClock(self, sides, affected_side):
+        sides[affected_side] = sides[affected_side].reshape([9])
+        self.sides[affected_side] = self.sides[affected_side].reshape([9])
 
         for _ in range(0, 3):
-            sides[5][6 - (_ * 3)] = self.sides[5][_]
+            sides[affected_side][_ * 2 + 2 + _] = self.sides[affected_side][_]
         for _ in range(0, 3):
-            sides[5][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[5][6 - (_ * 3)]
+            sides[affected_side][(6 - (_ * 4)) + (2 * (_ + 1) + _)] = self.sides[affected_side][2 * (_ + 1) + _]
         for _ in range(0, 3):
-            sides[5][(-6 + (_ * 4)) + 8 - _] = self.sides[5][8 - _]
+            sides[affected_side][((_ * 2 + 2) * -1) + 8 - _] = self.sides[affected_side][8 - _]
         for _ in range(0, 3):
-            sides[5][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[5][2 * (_ + 1) + _]
+            sides[affected_side][(-6 + (_ * 4)) + (6 - (_ * 3))] = self.sides[affected_side][6 - (_ * 3)]
 
-        sides[5] = sides[5].reshape([3, 3])
-        self.sides[5] = self.sides[5].reshape([3, 3])
+        sides[affected_side] = sides[affected_side].reshape([3, 3])
+        self.sides[affected_side] = self.sides[affected_side].reshape([3, 3])
+
+        self.sides = copy.deepcopy(sides)
+
+    def rotateAntiClock(self, sides, affected_side):
+        sides[affected_side] = sides[affected_side].reshape([9])
+        self.sides[affected_side] = self.sides[affected_side].reshape([9])
+
+        for _ in range(0, 3):
+            sides[affected_side][6 - (_ * 3)] = self.sides[affected_side][_]
+        for _ in range(0, 3):
+            sides[affected_side][((_ + 1) * 2) + (6 - (_ * 3))] = self.sides[affected_side][6 - (_ * 3)]
+        for _ in range(0, 3):
+            sides[affected_side][(-6 + (_ * 4)) + 8 - _] = self.sides[affected_side][8 - _]
+        for _ in range(0, 3):
+            sides[affected_side][(2 * (_ + 1) + _) - (_ + 1) * 2] = self.sides[affected_side][2 * (_ + 1) + _]
+
+        sides[affected_side] = sides[affected_side].reshape([3, 3])
+        self.sides[affected_side] = self.sides[affected_side].reshape([3, 3])
 
         self.sides = copy.deepcopy(sides)
 
