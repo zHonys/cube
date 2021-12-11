@@ -39,31 +39,31 @@ class Cube:
         _ = 0
         while _ < len(seq):
             if seq[_] == "r":
-                self.r()
+                self.verMov(2)
             elif seq[_] == "u":
-                self.u()
+                self.horMov(0)
             elif seq[_] == "l":
-                self.l()
+                self.verMov(0)
             elif seq[_] == "d":
-                self.d()
+                self.horMov(2)
             elif seq[_] == "f":
-                self.f()
+                self.sideMov(2)
             elif seq[_] == "b":
-                self.b()
+                self.sideMov(0)
             elif seq[_] == "'":
                 _ += 1
                 if seq[_] == "r":
-                    self._r()
+                    self.verMov(2, True)
                 elif seq[_] == "u":
-                    self._u()
+                    self.horMov(0, True)
                 elif seq[_] == "l":
-                    self._l()
+                    self.verMov(0, True)
                 elif seq[_] == "d":
-                    self._d()
+                    self.horMov(2, True)
                 elif seq[_] == "f":
-                    self._f()
+                    self.sideMov(2, True)
                 elif seq[_] == "b":
-                    self._b()
+                    self.sideMov(0, True)
             _ += 1
 
     def repeat(self, seq):
@@ -75,199 +75,77 @@ class Cube:
             tim += 1
         print(tim)
 
-    def r(self):
+    def verMov(self, movside, reverse=False):
         sides = copy.deepcopy(self.sides)
 
+        l = [[5, 0, 2, 4], 0, [2, 4, 5, 0]]
+
+        if reverse:
+            l[1] = 2
+
         for _ in range(0, 3):
-            sides[0][_][2] = self.sides[2][_][2]
+            sides[0][_][movside] = self.sides[l[abs(movside - l[1])][0]][_][movside]
         for _ in range(0, 3):
-            sides[2][_][2] = self.sides[4][_][2]
+            sides[2][_][movside] = self.sides[l[abs(movside - l[1])][1]][_][movside]
         for _ in range(0, 3):
-            sides[4][_][2] = self.sides[5][_][2]
+            sides[4][_][movside] = self.sides[l[abs(movside - l[1])][2]][_][movside]
         for _ in range(0, 3):
-            sides[5][_][2] = self.sides[0][_][2]
+            sides[5][_][movside] = self.sides[l[abs(movside - l[1])][3]][_][movside]
 
         self.sides = copy.deepcopy(sides)
 
-        self.rotateClock(sides, 3)
+        if not reverse:
+            self.rotateClock(sides, movside + 1)
+        else:
+            self.rotateAntiClock(sides, movside + 1)
 
-    def u(self):
+    def horMov(self, movside, reverse=False):
         sides = copy.deepcopy(self.sides)
 
+        l = [[2, 3, 5, 1], 0, [5, 1, 2, 3]]
+
+        if reverse:
+            l[1] = 2
+
         for _ in range(0, 3):
-            sides[1][0][_] = self.sides[2][0][_]
+            sides[1][movside][_] = self.sides[l[abs(movside - l[1])][0]][l[1]][abs(abs(movside - l[1]) - _)]
         for _ in range(0, 3):
-            sides[2][0][_] = self.sides[3][0][_]
+            sides[2][movside][_] = self.sides[l[abs(movside - l[1])][1]][movside][_]
         for _ in range(0, 3):
-            sides[3][0][_] = self.sides[5][2][2 - _]
+            sides[3][movside][_] = self.sides[l[abs(movside - l[1])][2]][2 - l[1]][abs(abs(2 - movside - l[1]) - _)]
         for _ in range(0, 3):
-            sides[5][2][2 - _] = self.sides[1][0][_]
+            sides[5][2 - movside][2 - _] = self.sides[l[abs(movside - l[1])][3]][movside][_]
 
         self.sides = copy.deepcopy(sides)
 
-        self.rotateClock(sides, 0)
+        if not reverse:
+            self.rotateClock(sides, movside*2)
+        else:
+            self.rotateAntiClock(sides, movside*2)
 
-    def l(self):
+    def sideMov(self, movside, reverse=False):
         sides = copy.deepcopy(self.sides)
 
+        l = [[3, 0, 1, 4], 0, [1, 4, 3, 0]]
+
+        if reverse:
+            l[1] = 2
+
         for _ in range(0, 3):
-            sides[0][_][0] = self.sides[5][_][0]
+            sides[0][movside][_] = self.sides[l[abs(movside - l[1])][0]][_][abs(l[1] - 2)]
         for _ in range(0, 3):
-            sides[5][_][0] = self.sides[4][_][0]
+            sides[1][_][movside] = self.sides[l[abs(movside - l[1])][1]][l[1]][_ - (2 - movside)]
         for _ in range(0, 3):
-            sides[4][_][0] = self.sides[2][_][0]
+            sides[4][2 - movside][_] = self.sides[l[abs(movside - l[1])][2]][_][l[1]]
         for _ in range(0, 3):
-            sides[2][_][0] = self.sides[0][_][0]
+            sides[3][_][2 - movside] = self.sides[l[abs(movside - l[1])][3]][abs(l[1] - 2)][_ - (2 - movside)]
 
         self.sides = copy.deepcopy(sides)
 
-        self.rotateClock(sides, 1)
-
-    def d(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[1][2][_] = self.sides[5][0][2 - _]
-        for _ in range(0, 3):
-            sides[5][0][2 - _] = self.sides[3][2][_]
-        for _ in range(0, 3):
-            sides[3][2][_] = self.sides[2][2][_]
-        for _ in range(0, 3):
-            sides[2][2][_] = self.sides[1][2][_]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateClock(sides, 4)
-
-        self.sides = copy.deepcopy(sides)
-
-    def f(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[0][2][_] = self.sides[1][_][2]
-        for _ in range(0, 3):
-            sides[1][_][2] = self.sides[4][0][_]
-        for _ in range(0, 3):
-            sides[4][0][_] = self.sides[3][_][0]
-        for _ in range(0, 3):
-            sides[3][_][0] = self.sides[0][2][_]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateClock(sides, 2)
-
-    def b(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[0][0][_] = self.sides[3][_][2]
-        for _ in range(0, 3):
-            sides[3][_][2] = self.sides[4][2][2 - _]
-        for _ in range(0, 3):
-            sides[4][2][_] = self.sides[1][_][0]
-        for _ in range(0, 3):
-            sides[1][_][0] = self.sides[0][0][2 - _]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateClock(sides, 5)
-
-    def _r(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[0][_][2] = self.sides[5][_][2]
-        for _ in range(0, 3):
-            sides[5][_][2] = self.sides[4][_][2]
-        for _ in range(0, 3):
-            sides[4][_][2] = self.sides[2][_][2]
-        for _ in range(0, 3):
-            sides[2][_][2] = self.sides[0][_][2]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateAntiClock(sides, 3)
-
-    def _u(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[1][0][_] = self.sides[5][2][2 - _]
-        for _ in range(0, 3):
-            sides[5][2][2 - _] = self.sides[3][0][_]
-        for _ in range(0, 3):
-            sides[3][0][_] = self.sides[2][0][_]
-        for _ in range(0, 3):
-            sides[2][0][_] = self.sides[1][0][_]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateAntiClock(sides, 0)
-
-    def _l(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[0][_][0] = self.sides[2][_][0]
-        for _ in range(0, 3):
-            sides[2][_][0] = self.sides[4][_][0]
-        for _ in range(0, 3):
-            sides[4][_][0] = self.sides[5][_][0]
-        for _ in range(0, 3):
-            sides[5][_][0] = self.sides[0][_][0]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateAntiClock(sides, 1)
-
-    def _d(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[1][2][_] = self.sides[2][2][_]
-        for _ in range(0, 3):
-            sides[2][2][_] = self.sides[3][2][_]
-        for _ in range(0, 3):
-            sides[3][2][_] = self.sides[5][0][2 - _]
-        for _ in range(0, 3):
-            sides[5][0][2 - _] = self.sides[1][2][_]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateAntiClock(sides, 4)
-
-    def _f(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[0][2][_] = self.sides[3][_][0]
-        for _ in range(0, 3):
-            sides[3][_][0] = self.sides[4][0][2 - _]
-        for _ in range(0, 3):
-            sides[4][0][_] = self.sides[1][_][2]
-        for _ in range(0, 3):
-            sides[1][_][2] = self.sides[0][2][2 - _]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateAntiClock(sides, 0)
-
-    def _b(self):
-        sides = copy.deepcopy(self.sides)
-
-        for _ in range(0, 3):
-            sides[0][0][_] = self.sides[1][2 - _][0]
-        for _ in range(0, 3):
-            sides[1][_][0] = self.sides[4][2][_]
-        for _ in range(0, 3):
-            sides[4][2][_] = self.sides[3][2 - _][2]
-        for _ in range(0, 3):
-            sides[3][_][2] = self.sides[0][0][_]
-
-        self.sides = copy.deepcopy(sides)
-
-        self.rotateAntiClock(sides, 5)
+        if not reverse:
+            self.rotateClock(sides, int((2 - movside)*1.5)+2)
+        else:
+            self.rotateAntiClock(sides, int((2 - movside)*1.5)+2)
 
     def rotateClock(self, sides, affected_side):
         sides[affected_side] = sides[affected_side].reshape([9])
@@ -308,6 +186,6 @@ class Cube:
 
 cb = Cube()
 
-cb.read("db")
+cb.repeat("r'u")
 
 cb.draw()
